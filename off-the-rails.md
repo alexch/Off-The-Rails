@@ -207,6 +207,16 @@ Very useful object that's built from an env
     last_response,
     last_request
 
+## Sample Rack App: This Talk
+
+    git clone git://github.com/alexch/Off-The-Rails.git
+    cd Off-The-Rails
+    ruby app.rb
+    
+It launches a rack server that renders out this markdown file with some extra CSS using Erector.
+
+(If you're on Ruby 1.8 you may need to do `ruby -rrubygems app.rb` or you'll get a `app.rb:1:in `require': no such file to load -- rack (LoadError)`.)
+
 # Sinatra
 
 A web framework built on Rack.
@@ -224,20 +234,28 @@ Yes, that's it. No model, no view, no controller: just a route and a handler blo
 
 ## Sinatra Routes
 
+    get '/foo' do
+      erb :foo_index
+    end
+
     post '/foo' do
-      create_foo(params)
+      id = create_foo(params)
+      redirect "/foo/#{id}"
     end
 
     get '/foo/:id' do
       read_foo(params[:id])
+      haml :foo
     end
 
-    put '/foo/:id' do |foo_id| # alternative to params
+    put '/foo/:id' do |foo_id| # alternative to using params
       update_foo(foo_id)
+      redirect "/foo/#{foo_id}"
     end
 
     delete '/foo/:id' do
       delete_foo(params[:id])
+      redirect "/foo"
     end
 
 Note: there is no "controller" *per se* in Sinatra -- just an application and routes and handlers.
@@ -269,7 +287,7 @@ Note: there is no "controller" *per se* in Sinatra -- just an application and ro
   * workaround: use 'load' and have sub-files reopen MyApp
 * Sessions (via Rack::Session)
 
-## SinWiki: a simple Sinatra MVC app
+## SinWiki: a sample Sinatra MVC app
 
 SinWiki is a Sinatra app I whipped up for this talk. It uses a model (domain object) that is really just an in-memory hash table, as a standin for a "real" persistent object. It has Sinatra routes for the standard REST/CRUD methods, each of which ends with an inline Erector view. (The views should probably be externalized into classes.)
 
