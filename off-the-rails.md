@@ -156,9 +156,9 @@ A Rack middleware is a class that is initialized with an app, plus optional argu
 
 * gem written by me
 * watches the file system and reruns the given app if a file changes
-* if passed a `.ru` file, it calls rackup
+* if passed a `.ru` file, it calls rackup on it
 
-    rerun hello_app.ru
+    `rerun hello_app.ru`
     
 ## Rack::Request
 
@@ -183,13 +183,13 @@ Very useful object that's built from an env
   * Rack::MockResponse  
   * no sessions or cookie management
 
-### Rack::Test
+### rack-test
 
     gem install rack-test
     require 'rack/test'
     include Rack::Test::Methods
     
-  * Gives your tests a DSL for web conversations
+  * Gives your tests an interface for web conversations
   * Methods include:
     request,
     get,
@@ -206,6 +206,14 @@ Very useful object that's built from an env
     digest_authorize,
     last_response,
     last_request
+  *  Maintains a cookie jar across requests
+  *  Easily follow redirects when desired
+  *  Set request headers to be used by all subsequent requests
+  *  Small footprint. Approximately 200 LOC
+
+### rack-client
+
+Integration (over-the-wire) testing for HTTP apps, closely tracking the rack-test interface so you can easily switch between local and remote tests. E.g. use Rack::Cache and rack-test in development, then switch to Varnish and rack-client for staging tests.
 
 ## Sample Rack App: This Talk
 
@@ -324,6 +332,8 @@ SinWiki is a Sinatra app I whipped up for this talk. It uses a model (domain obj
 * This talk lives at <https://github.com/alexch/off-the-rails>
 * [Yehuda's #10 Favorite Thing About Ruby](http://yehudakatz.com/2009/08/24/my-10-favorite-things-about-the-ruby-language/)
 * [Rack](http://rack.rubyforge.org/)
+** [rack-test](https://github.com/brynary/rack-test)
+** [rack-client](https://github.com/halorgium/rack-client)
 * [Sinatra](http://sinatrarb.com)
 * [Grape](https://github.com/intridea/grape)
 * [Vegas](https://github.com/alexch/vegas)
