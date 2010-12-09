@@ -276,11 +276,12 @@ SinWiki is a Sinatra app I whipped up for this talk. It uses a model (domain obj
 
 # References
 
+* This talk lives at <https://github.com/alexch/off-the-rails>
 * [Yehuda's #10 Favorite Thing About Ruby](http://yehudakatz.com/2009/08/24/my-10-favorite-things-about-the-ruby-language/)
-* <http://rack.rubyforge.org/>
-* <http://sinatrarb.com>
-* <https://github.com/intridea/grape>
-* <https://github.com/alexch/vegas>
-* <https://github.com/alexch/siesta>
-* <https://github.com/alexch/rerun>
-* <https://github.com/bkerley/cans/>
+* [Rack](http://rack.rubyforge.org/)
+* [Sinatra](http://sinatrarb.com)
+* [Grape](https://github.com/intridea/grape)
+* [Vegas](https://github.com/alexch/vegas)
+* [Siesta](https://github.com/alexch/siesta)
+* [Rerun](https://github.com/alexch/rerun)
+* [Cans](https://github.com/bkerley/cans) a Rack app source browser
