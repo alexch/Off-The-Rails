@@ -7,9 +7,9 @@ new generation of so-called microframeworks built on Rack. And since
 Rails 3 is itself a Rack app, you don't have to give up Rails to get
 the benefit of Sinatra routes or Grape APIs.
 
-# Who am I
+# Who am I?
 
-Alex Chaffee
+### Alex Chaffee
 
 * Cofounder of Cohuman
 * Former principal of Pivotal Labs
@@ -146,7 +146,7 @@ Very useful object that's built from an env
   * params
   * etc.
   
-# Mixing Apps
+## Mixing Apps
 
 * `Rack::Builder`  
 * `Rack::URLMap` dispatches to separate apps based on path
@@ -157,30 +157,34 @@ Very useful object that's built from an env
 
 ### rack/mock
 
+  * `require 'rack/mock'`
   * Rack::MockRequest
   * Rack::MockResponse  
   * no sessions or cookie management
 
 ### Rack::Test
 
-`include Rack::Test::Methods`
-   gives your tests a DSL for web conversations
-
-    :request,
-    :get,
-    :post,
-    :put,
-    :delete,
-    :head,
-    :follow_redirect!,
-    :header,
-    :set_cookie,
-    :clear_cookies,
-    :authorize,
-    :basic_authorize,
-    :digest_authorize,
-    :last_response,
-    :last_request
+    gem install rack-test
+    require 'rack/test'
+    include Rack::Test::Methods
+    
+  * Gives your tests a DSL for web conversations
+  * Methods include:
+    request,
+    get,
+    post,
+    put,
+    delete,
+    head,
+    follow_redirect!,
+    header,
+    set_cookie,
+    clear_cookies,
+    authorize,
+    basic_authorize,
+    digest_authorize,
+    last_response,
+    last_request
 
 # Sinatra
 
@@ -233,8 +237,10 @@ Note: there is no "controller" in Sinatra -- just an application and routes (aka
 
 ## More Sinatra Features
 
-* Sinatra apps are middleware, so you can wrap a Rails app inside a Sinatra app
+* Sinatra apps are also middleware, so you can chain them
+* Also you can mix a Rails app with a Sinatra app
   * e.g. make your landing page and marketing site a Sinatra app, but pass logged-in users to your Rails app
+  * use Rack::Cascade or Rack::URLMap for this
 * `class MyApp < Sinatra::Base` for more modularity
   * though you still can't break your app up into multiple classes
   * workaround: use 'load' and have sub-files reopen MyApp
@@ -251,7 +257,7 @@ SinWiki is a Sinatra app I whipped up for this talk. It uses a model (domain obj
   * Load Path management
   * ActiveRecord integration
   * rake tasks for server management and deployment
-* Cohuman is based on Vegas (though heavily modified)
+* Cohuman is based on Vegas (though heavily modified by now)
 
 # Grape
 
@@ -266,8 +272,6 @@ SinWiki is a Sinatra app I whipped up for this talk. It uses a model (domain obj
   * If that object is a view, it gets GET
   * If it's persistent, it gets GET, POST, DELETE, /new, etc.
   * Siesta handles core functionality and hands off to Handlers and Commands and Views for specialized work
-
-* Sinatra apps are also middleware, so you can chain them
 
 ## Mounting Rack apps inside a Rails app
 

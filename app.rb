@@ -14,9 +14,11 @@ end
 
 class Page < Erector::Widgets::Page
   external :style, <<-CSS
-  h1 { margin-top: 10em; }
-  h2 { margin-top: 5em;}
-h1:first-child { margin-top: 1em; }
+  body { font: normal normal normal 14pt/normal helvetica, arial, freesans, clean, sans-serif; }
+  h1 { margin-top: 10em; border-top: 4px solid #AAA !important; padding-top: .25em; }
+  h2 { margin-top: 5em; border-top: 4px solid #E0E0E0 !important; padding-top: .25em; }
+  h1:first-child { margin-top: 1em; }
+  pre { margin-left: 2em; margin-right: 2em; border: 1px solid black; padding: .5em; background: #EEEEFF;}
   CSS
   
   def body_content
