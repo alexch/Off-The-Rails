@@ -58,8 +58,15 @@ the benefit of Sinatra routes or Grape APIs.
   * mostly invisible, but very important
   * app subdir autoloading
   * views, models, controllers automatically located for you
+    * "Both awesome and terrible." - Sarah Allen
   * plugins and engines
-  * "Both awesome and terrible." - Sarah Allen
+ 
+If you're considering going to a non-Rails framework, then it's important to understand all that Rails gives you, for two reasons:
+
+1. If you want or need a Rails feature, does the new framework implement it? And if not, how much work would it be to reimplement it?
+2. If you don't need a Rails feature, how much simpler would your non-Rails code be without it?
+
+Consider development, maintenance, and education effort in your decision.
  
 ## Why not use Rails?
 
@@ -69,6 +76,8 @@ the benefit of Sinatra routes or Grape APIs.
 * Don't like unencapsulated miscegeny between controllers and views
 * Too Complex (right tool for the job)
 * Performance
+
+You might be thinking, "Wait, did he just say, 'Don't need MVC?' But isn't MVC the best architecture ever, handed down by God during the dark ages of the late 1990s?" Well, maybe, but plenty of webapps have different architectures and they're doing fine. For instance, most PHP apps are essentially Views with no models or controllers. And on the other side, Controllers and Models can be replaced or augmented with other patterns like Commands or Presenters or Components.
 
 # Rack
 
@@ -86,13 +95,24 @@ It takes exactly one argument, the *environment*
 and returns an Array of exactly three values:
 The *status*,
 the *headers*,
-and the *body*. The body must respond to `each` (so can't be a String in Ruby 1.9).
+and the *body*. The body must respond to `each` (so, sadly, it can't be a String in Ruby 1.9).
 
     class HelloApp
       def self.call(env)
         [200, {'Content-Type' => 'text/plain'}, ["Hello"]]
       end
     end
+    
+An app is usually configured in a file called `config.ru` like this:
+
+    require './hello'
+    run HelloApp
+
+An app can also be a proc or lambda, since it responds to call. So this works too:
+
+    run lambda {|env| [200, {'Content-Type' => 'text/plain'}, ["Hello"]]}
+
+`env` is a hash containing normal CGI environment variables as well as some extra Rack stuff. (Use the PrintEnv middleware, in this talk's github repo, to see it.)
 
 ## Rack Middleware
 * Not "shelf" :-(
@@ -116,6 +136,8 @@ A Rack middleware is a class that is initialized with an app, plus optional argu
 
 * <https://github.com/rack/rack-contrib>
 * More middleware than you can shake a stick at
+* Some highlights:
+  * [todo]
 
 ## Rackup and config.ru
 
@@ -134,10 +156,9 @@ A Rack middleware is a class that is initialized with an app, plus optional argu
 
 * gem written by me
 * watches the file system and reruns the given app if a file changes
+* if passed a `.ru` file, it calls rackup
 
-e.g.
-
-    rerun rackup hello_app.ru
+    rerun hello_app.ru
     
 ## Rack::Request
 
@@ -148,7 +169,7 @@ Very useful object that's built from an env
   
 ## Mixing Apps
 
-* `Rack::Builder`  
+* `Rack::Builder` implements the normal Rack `.ru` DSL on the passed-in block and returns an app
 * `Rack::URLMap` dispatches to separate apps based on path
   * e.g. `Rack::URLMap.new("/app1" => AppOne.new, "/app2" => AppTwo.new)`
 * `Rack::Cascade` tries an request on several apps, and returns the first response that is not 404 (or in a list of configurable status codes).
@@ -199,6 +220,8 @@ A web framework built on Rack.
 
     ruby hello.rb
     
+Yes, that's it. No model, no view, no controller: just a route and a handler block.
+
 ## Sinatra Routes
 
     post '/foo' do
@@ -209,15 +232,15 @@ A web framework built on Rack.
       read_foo(params[:id])
     end
 
-    put '/foo/:id' do
-      update_foo(params[:id])
+    put '/foo/:id' do |foo_id| # alternative to params
+      update_foo(foo_id)
     end
 
     delete '/foo/:id' do
       delete_foo(params[:id])
     end
 
-Note: there is no "controller" in Sinatra -- just an application and routes (aka handlers).
+Note: there is no "controller" *per se* in Sinatra -- just an application and routes and handlers.
 
 ## Sinatra DSL Features
 
