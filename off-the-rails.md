@@ -142,7 +142,7 @@ A Rack middleware is a class that is initialized with an app, plus optional argu
 ## Rackup and config.ru
 
 * `rackup` is a command-line tool that launches a Rack server
-* it reads app configuration, in Rack::Builder DSL format, from `config.ru`.
+* it reads app configuration, in Rack::Builder DSL format, from a `.ru` file (by default `config.ru`).
 
 `hello_app.ru`:
 
@@ -151,6 +151,8 @@ A Rack middleware is a class that is initialized with an app, plus optional argu
     use PrintEnv
     use Rack::ShowExceptions
     run HelloApp
+
+`rackup hello_app.ru` # will launch a server and run HelloApp with PrintEnv and ShowExceptions
 
 ## rerun
 
@@ -165,8 +167,11 @@ A Rack middleware is a class that is initialized with an app, plus optional argu
 Very useful object that's built from an env
 
   * params
+  * path
+  * media_type
+  * xhr?
   * etc.
-  
+
 ## Mixing Apps
 
 * `Rack::Builder` implements the normal Rack `.ru` DSL on the passed-in block and returns an app
@@ -266,7 +271,7 @@ Yes, that's it. No model, no view, no controller: just a route and a handler blo
       redirect "/foo"
     end
 
-Note: there is no "controller" *per se* in Sinatra -- just an application and routes and handlers.
+Note: there is no "controller" *per se* in Sinatra -- just an application and routes and handlers (and optionally, models and whatever other Ruby objects you require).
 
 ## Sinatra DSL Features
 
