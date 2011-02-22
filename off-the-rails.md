@@ -340,6 +340,7 @@ SinWiki is a Sinatra app I whipped up for this talk. It uses a model (domain obj
 ** [rack-test](https://github.com/brynary/rack-test)
 ** [rack-client](https://github.com/halorgium/rack-client)
 * [Sinatra](http://sinatrarb.com)
+** [Rapid Prototyping with Sinatra](http://www.alistapart.com/articles/rapid-prototyping-with-sinatra/) from A List Apart
 * [Grape](https://github.com/intridea/grape)
 * [Vegas](https://github.com/alexch/vegas)
 * [Siesta](https://github.com/alexch/siesta)
